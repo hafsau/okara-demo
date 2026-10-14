@@ -1,0 +1,136 @@
+@import "tailwindcss";
+
+/*
+ * Okara tokens, read from okara.ai computed styles and :root custom
+ * properties, October 2026 (shadcn-style, dark by default):
+ *  - Oatmeal neutrals: page #110F0E, card #292524, popover #1A1919,
+ *    border #45403A, input border #44403C, text #F3F0EC, muted #B7B1A4.
+ *  - Accents: auric red #FF6666, aqua #56D2BF, stat green #4ADE80.
+ *  - Type: Sora 600 headings (36/40), DM Sans body (16/24), JetBrains Mono code.
+ *  - Primary CTA: light pill #F3F0EC on #110F0E text, DM Sans 500 14px, 40px, trailing arrow.
+ *  - URL input: 54px pill on the card colour, 1px border, border turns light on focus.
+ *  - Radii 12 (tiles), 16 (pricing/auth cards), 20 (story cards). Mostly flat shadows.
+ *  - Eyebrows: DM Sans 500 12px uppercase, 0.2em tracking, muted.
+ */
+:root {
+  color-scheme: dark;
+
+  --bg: #110f0e;
+  --popover: #1a1919;
+  --card: #292524;
+  --line: #45403a;
+  --line-input: #44403c;
+  --line-soft: #292524;
+
+  --text: #f3f0ec;
+  --muted: #b7b1a4;
+  --dim: #8f897d;
+
+  --red: #ff6666;
+  --red-deep: #b30000;
+  --aqua: #56d2bf;
+  --green: #4ade80;
+  --amber: #f5b14c;
+  --orange: #f97316;
+
+  --focus: #f3f0ec;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-popover: var(--popover);
+  --color-card: var(--card);
+  --color-line: var(--line);
+  --color-line-input: var(--line-input);
+  --color-line-soft: var(--line-soft);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-dim: var(--dim);
+  --color-red: var(--red);
+  --color-aqua: var(--aqua);
+  --color-green: var(--green);
+  --color-amber: var(--amber);
+  --font-sans: var(--font-dm-sans), system-ui, sans-serif;
+  --font-display: var(--font-sora), var(--font-dm-sans), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+}
+
+html {
+  background: var(--bg);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.eyebrow {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.link {
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: var(--line);
+  text-underline-offset: 3px;
+}
+.link:hover {
+  text-decoration-color: var(--text);
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* The pixel grid behind okara.ai's hero, kept faint. */
+.pixel-grid {
+  background-image:
+    linear-gradient(to right, rgb(243 240 236 / 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(243 240 236 / 0.035) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse at top, black 20%, transparent 70%);
+}
+
+/* The logo's blink, done in CSS so it can respect reduced motion. */
+@keyframes blink {
+  0%, 90%, 96%, 100% { transform: scaleY(1); }
+  93% { transform: scaleY(0.1); }
+}
+.blink {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: blink 4s infinite;
+}
+
+@keyframes caret {
+  50% { opacity: 0; }
+}
+.caret {
+  animation: caret 1s steps(1) infinite;
+}
+
+/* Transform only: if animations are paused, content is still visible. */
+@keyframes rise {
+  from { transform: translateY(4px); }
+  to { transform: none; }
+}
+.rise {
+  animation: rise 240ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blink, .caret, .rise { animation: none; }
+}
