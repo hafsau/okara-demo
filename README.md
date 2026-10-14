@@ -45,7 +45,7 @@ The route reads only the homepage, robots.txt, llms.txt and one linked pricing p
 ## Stack and quality gates
 
 - **Stack:** Next.js 16, React 19, Tailwind 4, node-html-parser, Vercel Analytics.
-- **Unit tests:** `npm test`, 27 Vitest tests covering URL cleanup, private-IP blocking, robots.txt parsing, the price heuristics (cost-comparison tables, k/M amounts, thousands separators), minified HTML, SPA shells, fix generation, docs and limits.
+- **Unit tests:** `npm test`, 26 Vitest tests covering URL cleanup, private-IP blocking, robots.txt parsing, the price heuristics (cost-comparison tables, k/M amounts, thousands separators), minified HTML, SPA shells, fix generation, docs and limits.
 - **End-to-end:** `npm run e2e`, Playwright with axe across desktop, tablet and mobile: zero WCAG 2.2 AA violations and no horizontal scroll.
 - **Lighthouse:** `npx @lhci/cli autorun`. Accessibility 100 on every page and CLS ≤ 0.02. SEO is low on purpose, because the site is noindexed.
 
