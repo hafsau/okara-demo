@@ -1,5 +1,7 @@
 # The First 60 Seconds
 
+**▶ Live: [okara-demo-gray.vercel.app](https://okara-demo-gray.vercel.app)** · [Run the example](https://okara-demo-gray.vercel.app/?example) · [The teardown](https://okara-demo-gray.vercel.app/teardown)
+
 **An Okara onboarding concept.** An unofficial concept by [Hafsa Usmani](https://hafsausmani.com) for Okara's **Product Designer (UI/UX)** role.
 
 > **Not affiliated with Okara.** Site checks are real and run live on the URL you enter. Quillmate, the feed drafts and the credit usage are illustrative. Brand tokens and the pixel mark are taken from okara.ai to show the work in context. The site is noindexed.

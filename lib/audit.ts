@@ -210,7 +210,8 @@ export function parsePage(rawHtml: string, url: string): PageFacts {
 
   return {
     url,
-    name: siteName || brandFromTitle(title) || new URL(url).hostname.replace(/^www\./, ""),
+    // Some sites put a whole tagline in og:site_name ("Buffer: All-you-need…"); trim it like a title.
+    name: (siteName && (brandFromTitle(siteName) || siteName)) || brandFromTitle(title) || new URL(url).hostname.replace(/^www\./, ""),
     title,
     description,
     h1s,
@@ -274,7 +275,7 @@ function brandFromTitle(title: string) {
  * hire ("replaces a $5,000/mo hire", "$3M ARR"), and never cuts a number
  * short ("$3,000" is not "$3,00").
  */
-const PRICE = /(?:US\$|\$|€|£)\s?(\d{1,3}(?:,\d{3})+|\d+)(\.\d{1,2})?(?![\d,.]*\d)(?!\s?(?:[kKmMbB]|bn|million|billion)\b)(?:\s?\/\s?(mo|month|mth|yr|year|user|seat)\b)?/g;
+const PRICE = /(?:US\$|\$|€|£)\s?(\d{1,3}(?:,\d{3})+|\d+)(\.\d{1,2})?(?![\d,.]*\d)(?!\s?(?:[kKmMbBtT]|bn|tn|million|billion|trillion)\b)(?:\s?\/\s?(mo|month|mth|yr|year|user|seat)\b)?/g;
 const NOT_PRICE_AFTER = /^\W{0,3}(?:\/\s?\w+\s)?(?:job|hire|salary|agency|agencies|in\s|of\s(?:revenue|sales)|arr|mrr|revenue|raised|funding|saved|worth|valuation|off\b|discount|credit|budget|ad spend)/i;
 const NOT_PRICE_BEFORE = /(?:save|saved|saving|raised|revenue|arr|mrr|worth|valuation|replaces?(?: a| an)?|instead of|earned|made|generated|spent|costs? you|up to|over|paid out|hire|agency|writer|manager|freelancer|consultant|contractor|employee|salary|growth|cost|per month)\s*$/i;
 
@@ -290,9 +291,13 @@ export function findPrices(text: string) {
   }
   // Plans on one page sit within an order of magnitude; "$5,000/mo" next to "$29/mo" is a comparison, not a plan.
   const cheapest = Math.min(...found.filter((f) => f.amount > 0).map((f) => f.amount));
+  // "$129" and "$129/mo" are the same plan; keep the one that names the period.
+  const seen = new Set<number>();
   return uniq(
     found
       .filter((f) => f.amount <= cheapest * 12)
+      .sort((a, b) => Number(b.period) - Number(a.period))
+      .filter((f) => !seen.has(f.amount) && !!seen.add(f.amount))
       .sort((a, b) => Number(b.period) - Number(a.period) || a.amount - b.amount)
       .map((f) => f.s),
   ).slice(0, 5);

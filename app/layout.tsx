@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   title: { default: "The First 60 Seconds: an Okara onboarding concept", template: "%s · The First 60 Seconds" },
   description:
     "An unofficial Okara concept by Hafsa Usmani: paste any URL and get real SEO and AI-readiness findings and a ready-to-ship fix in seconds, before sign-up.",
-  metadataBase: new URL("https://first60-concept.vercel.app"),
+  metadataBase: new URL("https://okara-demo-gray.vercel.app"),
   // A concept for one reader: keep it out of search so it never competes with okara.ai.
   robots: { index: false, follow: false },
 };

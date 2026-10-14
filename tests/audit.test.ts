@@ -87,6 +87,8 @@ describe("findPrices", () => {
     expect(findPrices("The $14,000/mo job from $129/mo. Replaces a $5,000/mo hire.")).toEqual(["$129/mo"]);
     expect(findPrices("We hit $3M ARR and raised $20 million. Customers saved $400 a month.")).toEqual([]);
     expect(findPrices("$2.5k in revenue")).toEqual([]);
+    expect(findPrices("$1.9T in payments volume processed")).toEqual([]);
+    expect(findPrices("Start at $129. Lite is $129/mo.")).toEqual(["$129/mo"]);
   });
 });
 
@@ -187,6 +189,7 @@ describe("a well-built page", () => {
   it("uses og:site_name or the short side of the title as the brand", () => {
     expect(parsePage("<title>Ship faster — Linear</title>", "https://linear.app/").name).toBe("Linear");
     expect(parsePage('<meta property="og:site_name" content="Okara"><title>Meet Okara, the AI CMO</title>', "https://okara.ai/").name).toBe("Okara");
+    expect(parsePage('<meta property="og:site_name" content="Buffer: All-you-need social media toolkit for small businesses">', "https://buffer.com/").name).toBe("Buffer");
   });
 
   it("counts prices from a linked pricing page", () => {
